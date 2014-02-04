@@ -24,4 +24,4 @@ app.get('/hello', function(req, res) {
 	res.send('Hello World');
 });
 
-app.listen("80");
+app.listen(process.env.OPENSHIFT_NODEJS_PORT || 3000);
