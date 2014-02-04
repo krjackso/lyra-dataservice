@@ -1,5 +1,6 @@
 var express = require('express');
 var mysql = require('mysql');
+var app = express();
 
 var mysqlHost = process.env.OPENSHIFT_MYSQL_DB_HOST;
 var mysqlPort = process.env.OPENSHIFT_MYSQL_DB_PORT;
