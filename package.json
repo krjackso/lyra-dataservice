@@ -1,0 +1,25 @@
+{
+  "name": "Lyra-DataService",
+  "version": "0.0.0",
+  "description": "REST data service for Lyra Eartrainer application",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~3.4.8",
+    "mysql": "~2.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krjackso/lyra-dataservice.git"
+  },
+  "author": "krjackso@asu.edu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krjackso/lyra-dataservice/issues"
+  },
+  "homepage": "https://github.com/krjackso/lyra-dataservice"
+}
