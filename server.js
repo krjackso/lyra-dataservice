@@ -27,4 +27,7 @@ app.get('/hello', function(req, res) {
 
 console.log(process.env);
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT || 3000);
+var nodeport = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var nodeip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
+app.listen(nodeport, nodeip);
