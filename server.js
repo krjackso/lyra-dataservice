@@ -7,6 +7,7 @@ var mysqlHost = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1';
 var mysqlPort = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;
 var mysqlUser = process.env.OPENSHFIT_MYSQL_DB_USERNAME || 'admincRUjhJL';
 var mysqlPass = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || 'rAl5sijkwgqk';
+var pageSize = process.env.LYRA_DATA_LEADERBOARD_PAGESIZE || 10;
 
 // Config
 var connection = mysql.createConnection({
@@ -99,7 +100,32 @@ app.get('/leaderboard', function(req, res) {
 	connection.query(
 		'SELECT `leaderboard`.score, date, difficulty, instrument, game, `users`.nickname ' +
 		'FROM leaderboard ' + 
-		'JOIN users ON `leaderboard`.user_id = `users`.id',
+		'JOIN users ON `leaderboard`.user_id = `users`.id ' +
+		'ORDER BY score DESC',
+		function(err, leaderboard) {
+			if(!err) {
+				util.log(util.format('Result: %j', leaderboard));
+				res.send(200, leaderboard);
+			} else {
+				util.log(util.format('Error: %j', err));
+				res.send(500, err);
+			}
+		}
+	);
+});
+
+// Gets leaderboard entries for a particular user only
+app.get('/leaderboard/:page', function(req, res) {
+	var page = req.params.page;
+	var offset = (page-1) * pageSize;
+
+	connection.query(
+		'SELECT `leaderboard`.score, date, difficulty, instrument, game, `users`.nickname ' +
+		'FROM leaderboard ' + 
+		'JOIN users ON `leaderboard`.user_id = `users`.id ' +
+		'ORDER BY score DESC ' +
+		'LIMIT ? OFFSET ? ',
+		[pageSize, offset],
 		function(err, leaderboard) {
 			if(!err) {
 				util.log(util.format('Result: %j', leaderboard));
